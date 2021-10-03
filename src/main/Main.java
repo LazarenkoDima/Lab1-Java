@@ -24,7 +24,7 @@ public class Main {
     private  static ArrayList<Employee> getEmployeesWithSecondaryEducationOlder30(){
         ArrayList<Employee> result = new ArrayList<Employee>();
         for (Employee employee: employees) {
-            if(employee.getEducation() == Education.secondary && employee.getAge() >30){
+            if(employee.getEducation() == Education.secondary && employee.getAge() > 30){
                 result.add(employee);
             }
         }
@@ -37,7 +37,7 @@ public class Main {
         String[] birthdayPlaces = {"Germany","Italy","Japan","Polish","Kanada"};
         FootballerAmplua[] ampluas = {FootballerAmplua.attacking,FootballerAmplua.defender,FootballerAmplua.goalkeeper,FootballerAmplua.halfback,FootballerAmplua.libero};
         for(int i=0;i<5;i++){
-            Footbaler footbaler = new Footbaler(lastNames[0+(int)(Math.random()*5)],1980 + (int)(Math.random()*30),0+(int)(Math.random()*12),0+(int)(Math.random()*28),birthdayPlaces[i],ampluas[i],50+(int)(Math.random()*150),0+(int)(Math.random()*30));
+            Footbaler footbaler = new Footbaler(lastNames[0+(int)(Math.random()*5)],1980 + (int)(Math.random()*30),1+(int)(Math.random()*11),1+(int)(Math.random()*28),birthdayPlaces[i],ampluas[i],50+(int)(Math.random()*150),0+(int)(Math.random()*30));
             footbalers.add(footbaler);
         }
 
@@ -46,14 +46,14 @@ public class Main {
     private  static  ArrayList<Footbaler> getFootbalersOlder20AndLess1CardFor10Games(){
         ArrayList<Footbaler> result = new ArrayList<Footbaler>();
         for (Footbaler footbaler: footbalers) {
-            boolean olderThen20 = footbaler.getBirtdayDate().getYear() - LocalDate.now().getYear() >=20;
+            boolean olderThen20 = LocalDate.now().getYear() - footbaler.getBirtdayDate().getYear()  >= 20;
             boolean less1CardFor10Games;
             if(footbaler.getNumberOfYellowCard()==0){
                 less1CardFor10Games = true;
             }else{
                 less1CardFor10Games = footbaler.getNumberOfGames() / footbaler.getNumberOfYellowCard() >=10;
             }
-            if(olderThen20 = true && less1CardFor10Games == true){
+            if(olderThen20 == true && less1CardFor10Games == true){
                 result.add(footbaler);
             }
         }
@@ -61,24 +61,35 @@ public class Main {
     }
 
     public static void main(String[] args) {
-       initialEmployees();
-       ArrayList<Employee> neededEmployees = getEmployeesWithSecondaryEducationOlder30();
-       if(neededEmployees.isEmpty()){
-           System.out.println("No result");
-       }else{
-           for (Employee employee : neededEmployees) {
-               System.out.println(employee.toString());
-           }
-       }
-       initialFootbalers();
-       ArrayList<Footbaler>neededFootbalers = getFootbalersOlder20AndLess1CardFor10Games();
-       if(neededFootbalers.isEmpty()){
-           System.out.println("No result");
-       }else{
-           for (Footbaler footbaler: neededFootbalers) {
-               System.out.println(footbaler.toString());
-           }
-       }
+
+        initialEmployees();
+        System.out.println("Employees:");
+        for (var el :employees) {
+            System.out.println(el.toString());
+        }
+        ArrayList<Employee> neededEmployees = getEmployeesWithSecondaryEducationOlder30();
+        System.out.println("||||||||||");
+        if(neededEmployees.isEmpty()){
+            System.out.println("No result");
+        }else{
+            for (Employee employee : neededEmployees) {
+                System.out.println(employee.toString());
+            }
+        }
+        initialFootbalers();
+        System.out.println("Footbalers:");
+        for (var fot:footbalers) {
+            System.out.println(fot.toString());
+        }
+        System.out.println("|||||||||");
+        ArrayList<Footbaler>neededFootbalers = getFootbalersOlder20AndLess1CardFor10Games();
+        if(neededFootbalers.isEmpty()){
+            System.out.println("No result");
+        }else{
+            for (Footbaler footbaler: neededFootbalers) {
+                System.out.println(footbaler.toString());
+            }
+        }
 
 
     }
